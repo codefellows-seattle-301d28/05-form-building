@@ -90,7 +90,7 @@ articleView.initNewArticlePage = () => {
 
 };
 
-articleView.create = () => {
+articleView.create = () => { //will be our callback
   // TODO: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
 
@@ -110,7 +110,8 @@ articleView.create = () => {
 
 // COMMENT: Where is this function called? Why?
 // PUT YOUR RESPONSE HERE
-articleView.initIndexPage = () => {
+articleView.initIndexPage = () => { //used to be in $(document).ready() will function the same, but need to actually invoke initIndexPage (which is done on index.html at the very bottom) JUST A DIFFERENT WAY OF DOING IT. GIVES US SEPARATION OF CONCERNS. ACTUALLY HAVE TO INVOKE, NOT JUST .READY() WHICH INVOKES ON PAGE LOAD. By only using initIndexPage, only invokes the ones we need. 
+  articles.forEach(article => $('#articles').append(article.toHtml()));
   articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
