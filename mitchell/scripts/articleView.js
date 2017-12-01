@@ -83,29 +83,40 @@ articleView.initNewArticlePage = () => {
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
 
   $('#article-json').on('focus', function(){
-    this.select();
+    this.select(); //single click will highlight entire block
   });
 
   // TODO: Add an event handler to update the preview and the export field if any inputs change.
-
+  
 };
 
 articleView.create = () => { //will be our callback
   // TODO: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
+  $('#articles').clear();
 
 
-  // TODO: Instantiate an article based on what's in the form fields:
+  // TODO: Instantiate an article based on what's in the form fields: USE A TERNARY YOOOOOOOO to utilize checkbox after creating it
+  let articleDraft = new Article({
+    author: $('#article-author').val(),
+    authorUrl: $('article-Url').val(),
+    title: $('#article-title').val(), //comma b/c moving on to next part of object literal
+    category: $('article-category').val(),
+    body: $('article-body').val(),
+    publishedOn: $('publishedOn').val()
+  });
 
 
   // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
 
 
   // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
-  $('pre code').each();
+  $('pre code').each(function (i, block) {
+    hljs.highlightBlock(block);
+  });
 
   // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
-
+  //will need to .stringify YOOOOOOO
 };
 
 // COMMENT: Where is this function called? Why?

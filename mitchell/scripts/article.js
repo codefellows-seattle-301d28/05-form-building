@@ -11,7 +11,7 @@ function Article (rawDataObj) {
   this.publishedOn = rawDataObj.publishedOn;
 }
 
-Article.prototype.toHtml = () => {
+Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
