@@ -11,7 +11,7 @@ function Article (rawDataObj) {
   this.publishedOn = rawDataObj.publishedOn;
 }
 
-Article.prototype.toHtml = () => {
+Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
@@ -28,4 +28,4 @@ rawData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
 rawData.forEach(articleObject => articles.push(new Article(articleObject)))
 
-articles.forEach(article => $('#articles').append(article.toHtml()))
+// articles.forEach(article => $('#articles').append(article.toHtml()))
