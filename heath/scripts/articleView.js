@@ -94,23 +94,33 @@ articleView.create = () => {
   // TODO: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
 
-
   // TODO: Instantiate an article based on what's in the form fields:
+  let articleDraft = new Article({
+    author: $('#article-author').val(),
 
+    // do the rest for the form that we are building in new.html on line 60ish.
+
+  })
 
   // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
-
+  // use the .toHTML to push to the page. look at the past pages/ code to see how this works.
 
   // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
-  $('pre code').each();
+  $('pre code').each(function(i, book) {
+    hljs.highlightBlock(block);
+  });
 
   // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
-
+  // you will have to JSON stringify this so you can copy and paste as a string.
 };
 
 // COMMENT: Where is this function called? Why?
 // PUT YOUR RESPONSE HERE
+// this is called at the bottom of the index.html page. its just like document.ready but just doing it with functions.
+
+
 articleView.initIndexPage = () => {
+  articles.forEach(article => $('#articles').append(article.toHtml()))
   articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
