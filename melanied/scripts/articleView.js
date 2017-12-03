@@ -74,29 +74,34 @@ articleView.setTeasers = () => {
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// This function is called in the 'articleView.initIndexPage' function which is then called on the html file itself (both index and new). Since each page has its own corresponding javascript, the html file calls the function to load the page independently.
 articleView.initNewArticlePage = () => {
-  // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  $('.tab').show();
 
 
-  // TODO: The new articles we create will be copy/pasted into our source data file.
+  // DONE: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
+  $('export-field').hide();
 
   $('#article-json').on('focus', function(){
     this.select();
   });
 
-  // TODO: Add an event handler to update the preview and the export field if any inputs change. ***on('change') grab element
+  // DONE: Add an event handler to update the preview and the export field if any inputs change. ***on('change') grab element
+  $('#new-form').on('change', 'input', articleView.create);
 
 };
 
 articleView.create = () => {//***event listener method***
-  // TODO: Set up a variable to hold the new article we are creating.
+  // DONE: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
+  let articleDraft;
+  $('#article').empty();
 
 
   // TODO: Instantiate an article based on what's in the form fields:
-  let articleDraft = new Article ({
+  articleDraft = new Article ({
     author: $('#article-author').val(),
 
   });
