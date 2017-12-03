@@ -74,53 +74,63 @@ articleView.setTeasers = () => {
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// After the preview is built and placed onto the page so that it builds the listeners correctly.
 articleView.initNewArticlePage = () => {
   // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
   $('.tab-content').show()
+  articleView.handleMainNav();
 
-  // TODO: The new articles we create will be copy/pasted into our source data file.
+  // DONE: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
 
   $('#article-json').on('focus', function(){
     this.select();
   });
 
-  // TODO: Add an event handler to update the preview and the export field if any inputs change.
-  $('form').on('change', 'input', function() {
+  // DONE: Add an event handler to update the preview and the export field if any inputs change.
+  $('label').on('change', 'input', function() {
+    articleView.create();
+  });
+
+  $('label').on('change', 'textarea', function() {
     articleView.create();
   });
 };
 
 articleView.create = () => {
+  console.log('create')
   // DONE: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
-  $('articles').empty();
+  $('#articles').empty();
 
   // DONE: Instantiate an article based on what's in the form fields:
   let articleDraft = new Article ({
     author: $('#draft-author').val(),
-    authorUrl: $('#draft-author.Url').val(),
+    authorUrl: $('#draft-authorUrl').val(),
     title: $('#draft-title').val(),
     category: $('#draft-category').val(),
     publishedOn: $('#draft-publishedOn').val()? new Date() : '',
-    body: $('#draft-body')
+    body: $('textarea').val()
   })
 
-  // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
-  $('article').append(articleDraft);
+  // DONE: Use our interface to the Handblebars template to put this new article into the DOM:
+  $('#articles').append(articleDraft.toHtml());
+  articleView.setTeasers();
 
-  // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
-  $('pre code').each();
+  // DONE: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
 
-  // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
+  $('pre code').each( function(i, block) {
+    hljs.highlightBlock(block);
+  });
 
-  $('article-json').val(JSON.stringify(articleDraft))
+  // DONE: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
+
+  $('#article-json').val(JSON.stringify(articleDraft))
 
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// I called it within the .on() method for a 'change' event to any form elements so that every time something is changed it will update the preview.
 articleView.initIndexPage = () => {
   articles.forEach(article => $('#articles').append(article.toHtml()))
 
