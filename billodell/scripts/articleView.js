@@ -74,12 +74,12 @@ articleView.setTeasers = () => {
 };
 
 // COMMENT: Where is this function called? Why?
-// Its called an arrow function because it uses an arrow instead of the word function, it can also be used without brackets but if the code is multiple lines brackets are still used.
+// It is called on the bottom of the new.html page because we want it to load when the page initializes. 
 articleView.initNewArticlePage = () => {
   // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
   $('.tab-content').show()
 
-  // DONE: The new articles we create will be copy/pasted into our source data file.
+  // TODO: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
 
   $('#article-json').on('focus', function(){
@@ -94,18 +94,23 @@ $('#new-form').on('change', function() {
 
 })
 articleView.create = () => {
-  // TODO: Set up a variable to hold the new article we are creating.
+  // DONE: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
 
   // TODO: Instantiate an article based on what's in the form fields:
   let articleDraft = new Article({
-    title: $('#article-author').val(),
+    title: $('#article-title').val(),
+    author: $('#article-author').val(),
+    category: $('#article-category').val(),
+    authorUrl: $('#article-authorUrl').val(),
+    body: $('#article-body').val(),
+
     // use the length to see if the checkbox is true or false use a ternary
   })
 
-  // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
+  // DONE: Use our interface to the Handblebars template to put this new article into the DOM:
   // use .toHtml
-
+  articleDraft.toHtml();
   // DONE: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
   $('pre code').each(function(i, block){
     hljs.highlightBlock(block);
