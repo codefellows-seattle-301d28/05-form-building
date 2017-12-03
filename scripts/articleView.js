@@ -74,51 +74,70 @@ articleView.setTeasers = () => {
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// This function is called on our new html page because it is the piece of code we want to run only on that page for creating new articles
 articleView.initNewArticlePage = () => {
-  // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  $('.tab-content').show();
 
-
-  // TODO: The new articles we create will be copy/pasted into our source data file.
+  // DONE: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
+  $('#export-field').hide();
 
   $('#article-json').on('focus', function(){
     this.select();
   });
 
-  // TODO: Add an event handler to update the preview and the export field if any inputs change.
+  // DONE: Add an event handler to update the preview and the export field if any inputs change.
+  $('#new-form').on('change', function(){
+    articleView.create();
+  })
 
 };
 
 articleView.create = () => { //Event listener callback
-  // TODO: Set up a variable to hold the new article we are creating.
+  // DONE: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
 
 
-  // TODO: Instantiate an article based on what's in the form fields:
+  // DONE: Instantiate an article based on what's in the form fields:
+  //Create a String for todays date to use if the published field is checked
+  let todaysDate = new Date();
+
+  let myDateString = (todaysDate.getFullYear() + '-'
+           + ('0' + (todaysDate.getMonth()+1)).slice(-2) + '-'
+           + ('0' + todaysDate.getDate()).slice(-2));
+
   let articleDraft = new Article ({
-    author: $('#article-author').val(),
-    authorUrl:  $('#article-authorUrl').val(),
     title: $('#article-title').val(),
     category:  $('#article-category').val(),
-    body:  $('#article-body').val(),
-    //use ternary for published status
-  });
+    author: $('#article-author').val(),
+    authorUrl:  $('#article-authorUrl').val(),
+    publishedOn: $('#article-published').is(':checked') ? myDateString : '', //use ternary for published status (add one to month due to 0-11 months)
+    body:  $('#article-body').val()
+  })
 
-  // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
-
+  // DONE: Use our interface to the Handblebars template to put this new article into the DOM:
+  $('#articles').html(articleDraft.toHtml()) //insert article into html of the articles ID (no need to clear, it's being overwriten)
 
   // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
   $('pre code').each(function(i, block) {
     hljs.highlightBlock(block);
   });
 
-  // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
-  //use a stringify
+  // DONE: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
+  //Delete unnessary properties and show if form is filled out
+  if (articleDraft.title && articleDraft.category && articleDraft.author && articleDraft.authorUrl && articleDraft.body) {
+    $('#export-field').show();
+  }
+  delete articleDraft.daysAgo;
+  delete articleDraft.publishStatus;
+  $('#article-json').attr('placeholder', `{title: '${articleDraft.title}', category: '${articleDraft.category}', author: '${articleDraft.author}', authorUrl: '${articleDraft.authorUrl}', publishedOn: '${articleDraft.publishedOn}', body: '${articleDraft.body}'}`);
+
+
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// It's called on the index page because we have pieces that we want to run for the index page and pieces that we want to run for our new page
 articleView.initIndexPage = () => {
   articles.forEach(article => $('#articles').append(article.toHtml()));
   articleView.populateFilters();
