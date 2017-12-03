@@ -10,22 +10,23 @@
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
     <!-- NOTE (stretch goal): To fully incorporate the highlighting library "hljs" we need to fill the empty link tag below to refer to a CSS file that will handle our text highlighting -->
-    <link>
-    <!-- TODO done?: We want our new article form to be able to display a preview of the article that is being entered. Thus, we need code here that will recreate the same structure of our other articles. What do you think we need to add here? -->
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <!-- DONE?: We want our new article form to be able to display a preview of the article that is being entered. Thus, we need code here that will recreate the same structure of our other articles. What do you think we need to add here? -->
 
-      <script id="article-template" type="text/x-handlebars-template">
-        <article class="clearfix" data-author="{{author}}" data-category="{{category}}">
-          <header>
-            <h1>{{title}}</h1>
-            <div class="byline">
-              By <address><a href="{{authorUrl}}">{{author}}</a></address>
-              {{publishStatus}}
-            </div>
-          </header>
-          <section class="article-body">{{{body}}}</section>
-          <a href="#" class="read-on">Read on &rarr;</a>
-        </article>
-      </script>
+    <script id="article-template" type="text/x-handlebars-template">
+      <article class="clearfix" data-author="{{author}}" data-category="{{category}}">
+        <header>
+          <h1>{{title}}</h1>
+          <div class="byline">
+            By <address><a href="{{authorUrl}}">{{author}}</a></address>
+            {{publishStatus}}
+          </div>
+        </header>
+        <section class="article-body">{{{body}}}</section>
+        <a href="#" class="read-on">Read on &rarr;</a>
+      </article>
+    </script>
 
     </head>
   <body>
@@ -49,28 +50,35 @@
 
       <section id="write" class="tab-content">
         <h1>Create New Article</h1>
-        <!-- TODO: Set up a form to accept user input for a new blog article. Remember that we need:
-           1. Article title
-           2. Article body
-           3. Article author
-           4. Author's URL
-           5. Article category
+        <!-- Done: Set up a form to accept user input for a new blog article. Remember that we need:
+           1. Article title done
+           2. Article body done
+           3. Article author done
+           4. Author's URL done
+           5. Article categorym done
            6. Some way to know if this article is a draft or is published -->
 
         <form action="#" id="new-form">
           <label>
-            <input type="text" id="article-author" placeholder="Author Name" required>
+            <input type="text" id="article-title" placeholder="Title" required>
           </label>
           <label>
             <textarea id="post-body" rows="8" cols="40" placeholder="text goes here"></textarea>
           </label>
-          <!-- need to finsih 3-6  -->
+          <label>
+            <input type="text" id="article-author" placeholder="Author Name" required>
+          </label>
+          <label>
+            <input type="text" id="article-authorUrl" placeholder="Author URL" required>
+          </label>
+          <label>
+            <input type="text" id="article-category" placeholder="Category" required>
+          </label>
+          <label>
+            <input type="checkbox" id="published" value="checked">
+            <label for="published">Published</label>
+          </label>
         </form>
-
-
-
-
-
       </section>
 
       <section id="articles" class="tab-content">
@@ -93,15 +101,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <!-- NOTE (stretch goal): Include script tags for 3rd party libraries to enable Markdown rendering and code syntax highlighting. Use the minified CDN. Keep in mind that if we want these features to render properly on our main blog page (index.html) that we'll need to add those scripts over there, too. -->
-    <script src="/scripts/blogArticles.js"></script>
-    <script src="/scripts/article.js"></script>
-    <script src="/scripts/articleView.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="scripts/blogArticles.js"></script>
+    <script src="scripts/article.js"></script>
+    <script src="scripts/articleView.js"></script>
     <script>
-      // TODO: We will need to call a function here to initialize the behaviors on this page, once we get them built out. Why?
+      // DONE: We will need to call a function here to initialize the behaviors on this page, once we get them built out. Why?
       // (Look at the bottom of index.html as a reference. Since we are now using our JS on two different HTML pages that have different needs as to what parts of the code they utilize, we need to build a function that inializes each page.)
       //  Hint: Look in articleView.js for a function that does this.
 
-      // COMMENT: What is this function doing? Why do we need it?
+      articleView.initNewArticlePage();
+      // COMMENT: What is this function doing? Why do we need it? We will need to call a function here to initialize the behaviors on this page, once we get them built out. Why?
       // PUT YOUR RESPONSE HERE
     </script>
   </body>

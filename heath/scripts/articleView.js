@@ -77,6 +77,9 @@ articleView.setTeasers = () => {
 // PUT YOUR RESPONSE HERE
 articleView.initNewArticlePage = () => {
   // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  $('#new-form').on('change', function() {
+    articleView.create();
+  });
 
 
   // TODO: The new articles we create will be copy/pasted into our source data file.
@@ -91,22 +94,37 @@ articleView.initNewArticlePage = () => {
 };
 
 articleView.create = () => {
-  // TODO: Set up a variable to hold the new article we are creating.
+  // DONE: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
 
-  // TODO: Instantiate an article based on what's in the form fields:
+
+  // DONE: Instantiate an article based on what's in the form fields:
   let articleDraft = new Article({
     author: $('#article-author').val(),
-
-    // do the rest for the form that we are building in new.html on line 60ish.
-
+    title: $('#article-title').val(),
+    body: $('#post-body').val(),
+    articleUrl: $('#article-authorUrl').val(),
+    category: $('#article-category').val(),
+    draft: $('#published').val(),
   })
 
-  // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
+  if($('#published').is(':checked')) {
+    articleDraft.publishedOn = new Date();
+    // console.log('i am checked');
+  } else {
+    // console.log('not checked');
+    articleDraft.publishedOn = '';
+  }
+
+
+  // DONE: Use our interface to the Handblebars template to put this new article into the DOM:
   // use the .toHTML to push to the page. look at the past pages/ code to see how this works.
 
-  // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
-  $('pre code').each(function(i, book) {
+  $('#articles').html(''); //this resets the shown templete with nothing so it will not redo itself
+  $('#articles').append(articleDraft.toHtml()); //this takes the new post and append it to new.html by using the Article prototype method .tohtml().
+
+  // DONE: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
+  $('pre code').each(function(i, block) {
     hljs.highlightBlock(block);
   });
 
