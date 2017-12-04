@@ -75,6 +75,7 @@ articleView.setTeasers = () => {
 
 // COMMENT: Where is this function called? Why?
 // PUT YOUR RESPONSE HERE
+// this is getting called at the bottom of new.html and then calling all the methods hooked into it.
 articleView.initNewArticlePage = () => {
   // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
 
@@ -92,7 +93,7 @@ articleView.initNewArticlePage = () => {
     this.select();
   });
 
-  // TODO: Add an event handler to update the preview and the export field if any inputs change.
+  // DONE: Add an event handler to update the preview and the export field if any inputs change.
   // this is done i think
 };
 
@@ -105,7 +106,7 @@ articleView.create = () => {
   let articleDraft = new Article({
     author: $('#article-author').val(),
     title: $('#article-title').val(),
-    body: $('#post-body').val(),
+    body: marked($('#post-body').val()),
     articleUrl: $('#article-authorUrl').val(),
     category: $('#article-category').val(),
     draft: $('#published').val(),
@@ -131,7 +132,7 @@ articleView.create = () => {
     hljs.highlightBlock(block);
   });
 
-  // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
+  // DONE: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
   // you will have to JSON stringify this so you can copy and paste as a string.
 
   var myJsonString = JSON.stringify(articleDraft)

@@ -10,9 +10,8 @@
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
     <!-- NOTE (stretch goal): To fully incorporate the highlighting library "hljs" we need to fill the empty link tag below to refer to a CSS file that will handle our text highlighting -->
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-    <!-- DONE?: We want our new article form to be able to display a preview of the article that is being entered. Thus, we need code here that will recreate the same structure of our other articles. What do you think we need to add here? -->
+    <link rel="stylesheet" href="vendor/styles/railscasts.css">
+    <!-- DONE: We want our new article form to be able to display a preview of the article that is being entered. Thus, we need code here that will recreate the same structure of our other articles. What do you think we need to add here? -->
 
     <script id="article-template" type="text/x-handlebars-template">
       <article class="clearfix" data-author="{{author}}" data-category="{{category}}">
@@ -63,7 +62,7 @@
             <input type="text" id="article-title" placeholder="Title" required>
           </label>
           <label>
-            <textarea id="post-body" rows="8" cols="40" placeholder="text goes here"></textarea>
+            <textarea id="post-body" rows="8" cols="40" placeholder="text goes here" required></textarea>
           </label>
           <label>
             <input type="text" id="article-author" placeholder="Author Name" required>
@@ -86,7 +85,7 @@
       </section>
 
       <section id="article-export">
-        <!-- TODO: Refer to the preview image to see what we will be building here: we need a container of some kind to hold a JSON export of our article. Ideally this container would show only a incipit (short preview) of the JSON and also be clickable to allow easy selection of the text it holds. What kind of element could we use for this? -->
+        <!-- DONE: Refer to the preview image to see what we will be building here: we need a container of some kind to hold a JSON export of our article. Ideally this container would show only a incipit (short preview) of the JSON and also be clickable to allow easy selection of the text it holds. What kind of element could we use for this? -->
         <label id="export-field" for="article-json" class="pull-right">
           <input type="text" readonly id="article-json">
           When finalized, copy the above JSON, and poste into blogArticles.js
@@ -102,6 +101,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <!-- NOTE (stretch goal): Include script tags for 3rd party libraries to enable Markdown rendering and code syntax highlighting. Use the minified CDN. Keep in mind that if we want these features to render properly on our main blog page (index.html) that we'll need to add those scripts over there, too. -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="vendor/scripts/markedMin.js"></script>
     <script src="scripts/blogArticles.js"></script>
     <script src="scripts/article.js"></script>
     <script src="scripts/articleView.js"></script>
@@ -114,6 +114,7 @@
 
       // COMMENT: What is this function doing? Why do we need it? We will need to call a function here to initialize the behaviors on this page, once we get them built out. Why?
       // PUT YOUR RESPONSE HERE
+      // this is calling the initNewArticlePage function and then using all the functions and the methods hooked into it.
     </script>
   </body>
 </html>
