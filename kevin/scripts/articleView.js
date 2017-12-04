@@ -1,6 +1,6 @@
 'use strict';
 //var marked = require('vendor/scripts/marked');
-let dateStamp = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`;
+const dateStamp = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`;
 let articleView = {};
 
 articleView.populateFilters = () => {
@@ -94,25 +94,23 @@ articleView.initNewArticlePage = () => {
 
 
   $('#draft-body-text').on('change', function(){
+    $('#draft-body-html').val(marked($(this).val())).change()
 
-    //$('#draft-body-html').val(marked($(this).val())).change();
-    //$('#draft-body-html').val(`<p>${$(this).val().trim().replace(/\n/g,'</p><p>')}</p>`).change();
-    //$('#draft-body-html').val(marked(`<p>${$(this).val().trim().replace(/\n/g,'</p><p>')}</p>`)).change();
-    //convert all line feeds to double line feeds to get marked to reconize each line as a seperate paragraph
-    let bodyHtml_list =[];
-    let code = false;
-    let paragraphs = $(this).val().trim().split('\n');
-    paragraphs.forEach( (paragraph) => {
-      if (paragraph.indexOf('```') === -1 ){
-        (!code) ? paragraph = `${paragraph}\n\n` : paragraph = `${paragraph}\n`;
-      } else {
-        paragraph = `\n${paragraph}\n`;
-        (code) ? code = false : code = true;
-      }
-      bodyHtml_list.push(paragraph)
-      let bodyText = bodyHtml_list.join('')
-      $('#draft-body-html').val(marked(bodyText)).change();
-    });
+    // //convert all line feeds to double line feeds to get marked to reconize each line as a seperate paragraph
+    // let bodyHtml_list =[];
+    // let code = false;
+    // let paragraphs = $(this).val().trim().split('\n');
+    // paragraphs.forEach( (paragraph) => {
+    //   if (paragraph.indexOf('```') === -1 ){
+    //     (!code) ? paragraph = `${paragraph}\n\n` : paragraph = `${paragraph}\n`;
+    //   } else {
+    //     paragraph = `\n${paragraph}\n`;
+    //     (code) ? code = false : code = true;
+    //   }
+    //   bodyHtml_list.push(paragraph)
+    //   let bodyText = bodyHtml_list.join('')
+    //   $('#draft-body-html').val(marked(bodyText)).change();
+    // });
 
   })
 
@@ -149,11 +147,7 @@ articleView.create = () => {
   // Done: Use our interface to the Handblebars template to put this new article into the DOM:
   $('#articles').append(articleDraft.toHtml());
 
-  // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
-  // $('pre code').each(function(i, block){
-  //   hljs.highlightBlock(block);
-  // });
-
+  // DONE: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
   $('pre code').each(function(i, block){
     hljs.highlightBlock(block);
   });
