@@ -74,9 +74,10 @@ articleView.setTeasers = () => {
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// This function is being called in index.html after all other scrips have run.
 articleView.initNewArticlePage = () => {
-  // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  $('.tab-content').fadeIn();
 
 
   // TODO: The new articles we create will be copy/pasted into our source data file.
@@ -91,7 +92,7 @@ articleView.initNewArticlePage = () => {
 };
 
 articleView.create = () => { //will be our callback
-  // TODO: Set up a variable to hold the new article we are creating.
+  // DONE: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
   $('#articles').clear();
 
@@ -120,7 +121,7 @@ articleView.create = () => { //will be our callback
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// This function is called on the index.html page. It allows for us to choose when and what to invoke instead of having things automatically load when the page loads. This allows for the ability to call functions in a certain order as desired, instead of having a certain function called before desired.
 articleView.initIndexPage = () => { //used to be in $(document).ready() will function the same, but need to actually invoke initIndexPage (which is done on index.html at the very bottom) JUST A DIFFERENT WAY OF DOING IT. GIVES US SEPARATION OF CONCERNS. ACTUALLY HAVE TO INVOKE, NOT JUST .READY() WHICH INVOKES ON PAGE LOAD. By only using initIndexPage, only invokes the ones we need. 
   articles.forEach(article => $('#articles').append(article.toHtml()));
   articleView.populateFilters();
