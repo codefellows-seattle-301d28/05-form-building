@@ -80,7 +80,6 @@ articleView.initNewArticlePage = () => {
   $('.tab-content').show();
   articleView.handleMainNav();
 
-
   // DONE: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
   $('#article-export').hide();
@@ -91,7 +90,6 @@ articleView.initNewArticlePage = () => {
 
   // DONE: Add an event handler to update the preview and the export field if any inputs change. ***on('change') grab element
   $('#new-form').on('change', articleView.create);
-
 };
 
 articleView.create = () => {//***event listener method***
@@ -100,13 +98,12 @@ articleView.create = () => {//***event listener method***
   let articleDraft;
   $('#articles').empty();
 
-
   // DONE: Instantiate an article based on what's in the form fields:
   articleDraft = new Article ({
     title: $('#article-title').val(),
     category: $('#article-category').val(),
     author: $('#article-author').val(),
-    body: marked($('#article-body').val()),
+    body: $('#article-body').val(),
     authorUrl: $('#article-authorUrl').val(),
     publishedOn: $('#article-published:checked').length ? new Date : null
   });
@@ -124,9 +121,6 @@ articleView.create = () => {//***event listener method***
   // DONE: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js: ***stringify in some way***
   $('#article-export').show();
   $('#article-json').val(JSON.stringify(articleDraft));
-  // console.log($('#article-json').val(JSON.stringify(articleDraft))
-  // );
-
 };
 
 // COMMENT: Where is this function called? Why?
