@@ -52,6 +52,22 @@
   opacity: .5;
 }
 
+#preview-btn {
+  padding: 8px 12px;
+  background: linear-gradient(#555, #777, #555);
+  color: #FFF;
+  outline: none;
+  transition-duration: 250ms;
+}
+
+#preview-btn:hover {
+  opacity: .5;
+}
+
+#preview-btn:active {
+  background: #333;
+}
+
 #article-export {
   float: right;
 }

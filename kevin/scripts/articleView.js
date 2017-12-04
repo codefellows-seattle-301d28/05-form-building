@@ -85,7 +85,7 @@ articleView.initNewArticlePage = () => {
   // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
   $('#write').show();
 
-  // TODO: The new articles we create will be copy/pasted into our source data file.
+  // DONE: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
   $('#article-export').hide();
   $('#article-json').on('focus', function(){
@@ -94,12 +94,25 @@ articleView.initNewArticlePage = () => {
 
 
   $('#draft-body-text').on('change', function(){
-    $('#draft-body-html').val(`<p>${$(this).val().trim().replace(/\n/g,'</p><p>')}</p>`).change();
 
-    $('#draft-body-html').val(marked(`<p>${$(this).val().trim().replace(/\n/g,'</p><p>')}</p>`)).change();
-
-    //console.log('Marked body', marked(`<p>${$(this).val().trim().replace(/\n/g,'</p><p>')}</p>`))
-    //console.log('Marked body', marked($(this).val().trim()));
+    //$('#draft-body-html').val(marked($(this).val())).change();
+    //$('#draft-body-html').val(`<p>${$(this).val().trim().replace(/\n/g,'</p><p>')}</p>`).change();
+    //$('#draft-body-html').val(marked(`<p>${$(this).val().trim().replace(/\n/g,'</p><p>')}</p>`)).change();
+    //convert all line feeds to double line feeds to get marked to reconize each line as a seperate paragraph
+    let bodyHtml_list =[];
+    let code = false;
+    let paragraphs = $(this).val().trim().split('\n');
+    paragraphs.forEach( (paragraph) => {
+      if (paragraph.indexOf('```') === -1 ){
+        (!code) ? paragraph = `${paragraph}\n\n` : paragraph = `${paragraph}\n`;
+      } else {
+        paragraph = `\n${paragraph}\n`;
+        (code) ? code = false : code = true;
+      }
+      bodyHtml_list.push(paragraph)
+      let bodyText = bodyHtml_list.join('')
+      $('#draft-body-html').val(marked(bodyText)).change();
+    });
 
   })
 
@@ -107,7 +120,15 @@ articleView.initNewArticlePage = () => {
     $(this).prop('checked') ? $('#published-date').val(dateStamp).change() : $('#published-date').val('').change();
   })
 
-  // TODO: Add an event handler to update the preview and the export field if any inputs change.
+  $('#preview-btn').on('click', function(){
+    $('#articles').slideToggle(350, () => {
+      let btnTxt = 'Show Preview';
+      if ($(this).text() === btnTxt) btnTxt = 'Hide Preview';
+      $(this).text(btnTxt);
+    })
+  })
+
+  // DONE: Add an event handler to update the preview and the export field if any inputs change.
   $('#publish-form input[name]').on('change', articleView.create);
 };
 
@@ -115,6 +136,7 @@ articleView.create = () => {
   // Clear out the #articles element, so we can put in the updated preview
   $('#articles').empty();
 
+  // all imputs have a name attribute to use as the property name in the object
   let formData = {};
   $('#publish-form input[name]').each(function(){
     formData[$(this).attr('name')] = $(this).val();
@@ -132,7 +154,7 @@ articleView.create = () => {
   //   hljs.highlightBlock(block);
   // });
 
-  $('code').each(function(i, block){
+  $('pre code').each(function(i, block){
     hljs.highlightBlock(block);
   });
 

@@ -1,7 +1,7 @@
 'use strict';
 
 var rawData = [
-  {"author":"Kevin \"Stubby\" MiIller","authorUrl":"www.everymomsnightmare.com","title":"Whiz Bang","category":"Self Help","body":"<p>1. Get some matches.</p><p>2. Soak them in lighter fluid.</p><p>3. Wrap in several layers of tinfoil</p><p>4. Ignite</p><p>5. RUN!!!!</p>","publishedOn":"2017-12-3","daysAgo":0,"publishStatus":"published 0 days ago"},
+  {"author":"Kevin Stubby Miller","authorUrl":"www.everymomsnightmare.com","title":"Whiz Bang","category":"Self Help","body":"<p>1. Get some matches.</p><p>2. Soak them in lighter fluid.</p><p>3. Wrap in several layers of tinfoil</p><p>4. Ignite</p><p>5. RUN!!!!</p>","publishedOn":"2017-12-3","daysAgo":0,"publishStatus":"published 0 days ago"},
   {
     title:       'Bacon Ipsum',
     category:    'food',
