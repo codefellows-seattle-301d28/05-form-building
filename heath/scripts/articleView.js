@@ -75,43 +75,69 @@ articleView.setTeasers = () => {
 
 // COMMENT: Where is this function called? Why?
 // PUT YOUR RESPONSE HERE
+// this is getting called at the bottom of new.html and then calling all the methods hooked into it.
 articleView.initNewArticlePage = () => {
-  // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+
+  articleView.handleMainNav();
+
+  $('#new-form').on('change', function() {
+    articleView.create();
+  });
 
 
-  // TODO: The new articles we create will be copy/pasted into our source data file.
+  // DONE: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
 
   $('#article-json').on('focus', function(){
     this.select();
   });
 
-  // TODO: Add an event handler to update the preview and the export field if any inputs change.
-
+  // DONE: Add an event handler to update the preview and the export field if any inputs change.
+  // this is done i think
 };
 
 articleView.create = () => {
-  // TODO: Set up a variable to hold the new article we are creating.
+  // DONE: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
 
-  // TODO: Instantiate an article based on what's in the form fields:
+
+  // DONE: Instantiate an article based on what's in the form fields:
   let articleDraft = new Article({
     author: $('#article-author').val(),
-
-    // do the rest for the form that we are building in new.html on line 60ish.
-
+    title: $('#article-title').val(),
+    body: marked($('#post-body').val()),
+    articleUrl: $('#article-authorUrl').val(),
+    category: $('#article-category').val(),
+    draft: $('#published').val(),
   })
 
-  // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
+  if($('#published').is(':checked')) {
+    articleDraft.publishedOn = new Date();
+    // console.log('i am checked');
+  } else {
+    // console.log('not checked');
+    articleDraft.publishedOn = '';
+  }
+
+
+  // DONE: Use our interface to the Handblebars template to put this new article into the DOM:
   // use the .toHTML to push to the page. look at the past pages/ code to see how this works.
 
-  // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
-  $('pre code').each(function(i, book) {
+  $('#articles').html(''); //this resets the shown templete with nothing so it will not redo itself
+  $('#articles').append(articleDraft.toHtml()); //this takes the new post and append it to new.html by using the Article prototype method .tohtml().
+
+  // DONE: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
+  $('pre code').each(function(i, block) {
     hljs.highlightBlock(block);
   });
 
-  // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
+  // DONE: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
   // you will have to JSON stringify this so you can copy and paste as a string.
+
+  var myJsonString = JSON.stringify(articleDraft)
+  $('#article-json').val(myJsonString);
+  // console.log('this is my string:', myJsonString);
 };
 
 // COMMENT: Where is this function called? Why?
