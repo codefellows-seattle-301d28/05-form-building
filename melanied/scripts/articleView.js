@@ -78,6 +78,7 @@ articleView.setTeasers = () => {
 articleView.initNewArticlePage = () => {
   // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
   $('.tab-content').show();
+  articleView.handleMainNav();
 
 
   // DONE: The new articles we create will be copy/pasted into our source data file.
@@ -105,16 +106,18 @@ articleView.create = () => {//***event listener method***
     title: $('#article-title').val(),
     category: $('#article-category').val(),
     author: $('#article-author').val(),
+    body: marked($('#article-body').val()),
     authorUrl: $('#article-authorUrl').val(),
     publishedOn: $('#article-published:checked').length ? new Date : null
   });
 
   // DONE: Use our interface to the Handblebars template to put this new article into the DOM: ***tohtml***
   $('#articles').append(articleDraft.toHtml());
+  console.log(articleDraft.body);
 
 
-  // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
-  $('pre code').each(function (i, block) {
+  // DONE: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
+  $('code').each(function (i, block) {
     hljs.highlightBlock(block);
   });
 
