@@ -74,50 +74,56 @@ articleView.setTeasers = () => {
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// This function is being called in index.html after all other scrips have run.
 articleView.initNewArticlePage = () => {
-  // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  $('.tab-content').fadeIn();
 
 
   // TODO: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
 
   $('#article-json').on('focus', function(){
-    this.select();
+    this.select(); //single click will highlight entire block
   });
 
   // TODO: Add an event handler to update the preview and the export field if any inputs change.
-
+  
 };
 
-articleView.create = () => {
-  // TODO: Set up a variable to hold the new article we are creating.
+articleView.create = () => { //will be our callback
+  // DONE: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
+  $('#articles').clear();
 
 
-  // TODO: Instantiate an article based on what's in the form fields:
+  // TODO: Instantiate an article based on what's in the form fields: USE A TERNARY YOOOOOOOO to utilize checkbox after creating it
   let articleDraft = new Article({
     author: $('#article-author').val(),
+    authorUrl: $('article-Url').val(),
+    title: $('#article-title').val(), //comma b/c moving on to next part of object literal
+    category: $('article-category').val(),
+    body: $('article-body').val(),
+    publishedOn: $('publishedOn').val()
   });
-
-
 
 
   // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
 
 
   // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
-  $('pre code').each(function(i, block) {
+  $('pre code').each(function (i, block) {
     hljs.highlightBlock(block);
   });
 
   // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
-
+  //will need to .stringify YOOOOOOO
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
-articleView.initIndexPage = () => {
+// This function is called on the index.html page. It allows for us to choose when and what to invoke instead of having things automatically load when the page loads. This allows for the ability to call functions in a certain order as desired, instead of having a certain function called before desired.
+articleView.initIndexPage = () => { //used to be in $(document).ready() will function the same, but need to actually invoke initIndexPage (which is done on index.html at the very bottom) JUST A DIFFERENT WAY OF DOING IT. GIVES US SEPARATION OF CONCERNS. ACTUALLY HAVE TO INVOKE, NOT JUST .READY() WHICH INVOKES ON PAGE LOAD. By only using initIndexPage, only invokes the ones we need. 
+  articles.forEach(article => $('#articles').append(article.toHtml()));
   articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();

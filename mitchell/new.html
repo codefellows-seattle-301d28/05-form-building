@@ -12,6 +12,19 @@
     <!-- NOTE (stretch goal): To fully incorporate the highlighting library "hljs" we need to fill the empty link tag below to refer to a CSS file that will handle our text highlighting -->
     <link>
     <!-- TODO: We want our new article form to be able to display a preview of the article that is being entered. Thus, we need code here that will recreate the same structure of our other articles. What do you think we need to add here? -->
+    <script id="article-template" type="text/x-handlebars-template">
+      <article class="clearfix" data-author="{{author}}" data-category="{{category}}">
+        <header>
+          <h1>{{title}}</h1>
+          <div class="byline">
+            By <address><a href="{{authorUrl}}">{{author}}</a></address>
+            {{publishStatus}}
+          </div>
+        </header>
+        <section class="article-body">{{{body}}}</section>
+        <a href="#" class="read-on">Read on &rarr;</a>
+      </article>
+    </script>
     </head>
   <body>
     <header class="site-header clearfix">
@@ -42,12 +55,34 @@
            5. Article category
            6. Some way to know if this article is a draft or is published -->
 
-        <form action="#" id="new-form">
-          <label>
-            <input type="text" id="article-author" placeholder="Author Name" required>
-          </label>
+           <form action="#" id="new-form">
+            <label>
+              <input type="text" id="article-title" placeholder="Article Title" required>
+            </label>
+            
+            <label>
+              <input type="text" id="article-body" placeholder="Article Body" required>
+            </label>
+            
+            <label>  <!-- makes DOM traversal easier like this -->
+              <input type="text" id="article-author" placeholder="Author Name" required> 
+              <!-- required just forces the form field to be filled in to submit -->
+              <!-- need to use TEXT AREA thing here -->
+            </label>
 
-        </form>
+            <label>
+              <input type="text" id="author-url" placeholder="Author URL" required>
+            </label>
+
+            <label>
+              <input type="text" id="article-category" placeholder="Article Category" required>
+            </label>
+
+            <label>
+              <input type="text" id="isDraft" placeholder="Draft or Published?" required>
+            </label>
+
+           </form>
       </section>
 
       <section id="articles" class="tab-content">
@@ -56,9 +91,8 @@
 
       <section id="article-export">
         <!-- TODO: Refer to the preview image to see what we will be building here: we need a container of some kind to hold a JSON export of our article. Ideally this container would show only a incipit (short preview) of the JSON and also be clickable to allow easy selection of the text it holds. What kind of element could we use for this? -->
-
         <label id="export-field" for="article-json" class="pull-right">
-          <input type="text" readonly id="article-json">
+          <input type="text" id="article-json" readonly>
           When finalized, copy the above JSON, and paste into blogArticles.js
         </label>
       </section>
