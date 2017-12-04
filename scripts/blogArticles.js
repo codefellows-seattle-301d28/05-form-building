@@ -1,6 +1,7 @@
 'use strict';
 
-var rawData = [
+var rawData = [ //Added one test article
+  {title: 'My blog Title', category: 'food', author: 'Jeremy', authorUrl: 'jere.my', publishedOn: '2017-12-03', body: 'This is my body section'},
   {
     title:       'Bacon Ipsum',
     category:    'food',
