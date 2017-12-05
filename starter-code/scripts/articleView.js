@@ -121,7 +121,6 @@ articleView.create = () => {
   //stringify
   $('#article-export').show();
   $('#article-json').val(JSON.stringify(articleDraft) + ',');
-  console.log($('#article-json').val(JSON.stringify(articleDraft) + ','))
 };
 
 // COMMENT: Where is this function called? Why?
