@@ -52,8 +52,8 @@ articleView.handleMainNav = () => {
     $('.tab-content').hide();
     $(`#${$(this).data('content')}`).fadeIn();
   });
-
-  $('.main-nav .tab:first').click();
+  $('.main-nav .tab-content:first').click();
+//  $('.main-nav .tab:first').click(); --- starter code - does not work for preview - why 
 };
 
 articleView.setTeasers = () => {
@@ -78,22 +78,19 @@ articleView.setTeasers = () => {
 
 articleView.initNewArticlePage = () => {
   // Done: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
-  $('.tab-content').show()
+
   articleView.handleMainNav();
-  console.log('inside-init');
+  $('#write').show();
 
   // Done: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
-
+  $('#article-export').hide();
   $('#article-json').on('focus', function(){
     this.select();
   });
 
   // Done: Add an event handler to update the preview and the export field if any inputs change.
-  $('#draft-ArticleForm').on('change',function(){
-    console.log('inside-change');
-    articleView.create();
-  });
+  $('#draft-ArticleForm').on('change',articleView.create);
 
 };
 
@@ -108,9 +105,8 @@ articleView.create = () => {
     author: $('#draftAuthor').val(),
     authorUrl: $('#draftAuthorUrl').val(),
     category: $('#draftCategory').val(),
-  //  publishedOn: $('#draftPublishedOn').val() ? new Date(): '',
+    publishedOn: ($('#draftPublishedOn').prop('checked')) ? new Date() : '',
   })
-
   // Done: Use our interface to the Handblebars template to put this new article into the DOM:
   $('#articles').append(articleDraft.toHtml());
 
@@ -125,7 +121,8 @@ articleView.create = () => {
 //stringify
 };
 //JSON.stringify(articleDraft);
-
+// $('export-field').show();
+// $('export-json').val(JSON.stringify(articleDraft ',');
 
 // COMMENT: Where is this function called? Why?
 // PUT YOUR RESPONSE HERE

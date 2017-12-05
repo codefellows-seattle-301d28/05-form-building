@@ -15,8 +15,8 @@ Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
+  console.log('d-'+this.publishedOn);
   this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
-  console.log('toHtml-' + this.author);
   // STRETCH: Pass the article body into the marked.js library to format our Markdown input
   return template(this);
 };
